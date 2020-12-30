@@ -1,5 +1,7 @@
+#![feature(fn_traits)]
 pub mod event;
 pub mod listener;
+pub mod marshal;
 pub mod node;
 
 #[cfg(test)]
