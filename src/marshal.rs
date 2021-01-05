@@ -6,7 +6,6 @@ pub enum Marshalling {
 #[derive(Clone)]
 pub enum Unmarshalling {
     None,
-    Protobuffer,
 }
 
 pub trait Marshal {
@@ -14,7 +13,8 @@ pub trait Marshal {
 }
 
 pub trait Unmarshal {
-    fn unmarshal(&self, data: impl AsRef<[u8]>) -> Vec<u8>;
+    type Output;
+    fn unmarshal(&self, data: impl AsRef<[u8]>) -> Self::Output;
 }
 
 impl Marshal for Marshalling {
@@ -26,9 +26,8 @@ impl Marshal for Marshalling {
 }
 
 impl Unmarshal for Unmarshalling {
-    fn unmarshal(&self, data: impl AsRef<[u8]>) -> Vec<u8> {
-        match self {
-            _ => data.as_ref().into(),
-        }
+    type Output = Vec<u8>;
+    fn unmarshal(&self, data: impl AsRef<[u8]>) -> Self::Output {
+        data.as_ref().into()
     }
 }
