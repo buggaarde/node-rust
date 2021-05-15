@@ -1,13 +1,13 @@
-#![feature(fn_traits)]
-pub mod event;
-pub mod listener;
-pub mod marshal;
-pub mod node;
+mod event;
+mod node;
 
 #[cfg(test)]
 mod tests {
+    use super::*;
     #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
+    fn nodes_can_be_constructed() {
+        smol::block_on(async {
+            node::Node::new().await;
+        });
     }
 }
